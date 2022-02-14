@@ -1,11 +1,16 @@
+import json
+
 from my_calendar import import_calendar, MyCalendar
 
-profs = {"M4101C": {"B": "MONTANVERT"},
+profs = {"M4101C": {"B": "MONTANVERT",
+                    "C": "",
+                    "D": ""},
          "M4105C": {"B": "ORTEGA",
                     "C": "DAILLY",
                     "D": "LAURILLAU"},
-         "M4201C": {"C": "CHABOUD",
-                    "B": "BLANCO-LAINE"},
+         "M4201C": {"B": "BLANCO-LAINE",
+                    "C": "CHABOUD",
+                    "D": ""},
          "M4202C": {"B": "HAMON",
                     "D": "BILLIOT",
                     "C": "CORSET"}
@@ -23,19 +28,24 @@ def remove_options(calendar: MyCalendar, options: list) -> None:
             calendar.events.remove(event)
 
 
-def get_cours_from_options(calendar: MyCalendar, options_dict: dict) -> None:
+def delete_other_options(calendar: MyCalendar, options_dict: dict) -> None:
     global profs
     for event in calendar.events:
-        for matiere, option in options_dict.items():
-            if event.description.find(profs[matiere][option]) != -1:
-                print(event.description)
+        for i in profs.keys():  # Pour toutes les options
+            if event.description.find(i) != -1:  # Check si la matière est une matière à options
+                for matiere, option in options_dict.items():  # Pour toutes les options
+                    if event.description.find(profs[matiere][option]) == -1:  # Si l'option n'est pas celle demandée
+                        calendar.events.remove(event)  # On vire l'event
+                        break  # et on casse la boucle
 
 
 if __name__ == '__main__':
     matiere_options = ["M4101C", "M4105C", "M4201C", "M4202C"]
-    options_perso = {"M4101C": "B", "M4105C": "B"}  # "M4201C": "M4201C", "M4202C": "M4202C"}
+    with open("config.json", "r") as f:
+        options_perso = json.load(f)
 
     cal = import_calendar("ADECal.ics")
     # remove_options(cal, matiere_options)
     # cal.write("ADECal2.ics")
-    get_cours_from_options(cal, options_perso)
+    delete_other_options(cal, options_perso)
+    cal.write("ADECal2.ics")
