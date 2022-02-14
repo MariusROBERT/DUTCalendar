@@ -2,8 +2,9 @@ from event import Event, import_event
 
 
 class MyCalendar:
-    def __init__(self, events: list = None):
+    def __init__(self, events: list = None, prodid: str = None):
         self.__events = events if events else []
+        self.__prodid = "MariusROBERT" if prodid is None else prodid
 
     def add_event(self, event: Event):
         self.__events.append(event)
@@ -13,7 +14,7 @@ class MyCalendar:
         return self.__events
 
     def __str__(self):
-        text_start = "BEGIN:VCALENDAR\nMETHOD:REQUEST\nPRODID:MariusROBERT\nVERSION:2.0\nCALSCALE:GREGORIAN\n"
+        text_start = f"BEGIN:VCALENDAR\nMETHOD:REQUEST\nPRODID:{self.__prodid}\nVERSION:2.0\nCALSCALE:GREGORIAN\n"
         text_end = "\nEND:VCALENDAR"
         return text_start + "\n".join(str(event) for event in self.__events) + text_end
 
@@ -23,9 +24,9 @@ class MyCalendar:
 
 def import_calendar(file_name: str) -> MyCalendar:
     with open(file_name, 'r') as f:
-        text = f.read()
-    text = text.split("BEGIN:VEVENT")[1:]
-    calendar = MyCalendar()
+        text0 = f.read()
+    text = text0.split("BEGIN:VEVENT")[1:]
+    calendar = MyCalendar(text0[text0.find("PRODID:"):text0.find("\n")])
     for event in text:
         event = import_event(event)
         calendar.add_event(event)

@@ -5,15 +5,12 @@ from my_calendar import import_calendar, MyCalendar
 profs = {"M4101C": {"B": "MONTANVERT",
                     "C": "",
                     "D": ""},
-         "M4105C": {"B": "ORTEGA",
-                    "C": "DAILLY",
-                    "D": "LAURILLAU"},
          "M4201C": {"B": "BLANCO-LAINE",
                     "C": "CHABOUD",
                     "D": ""},
          "M4202C": {"B": "HAMON",
-                    "D": "BILLIOT",
-                    "C": "CORSET"}
+                    "C": "CORSET",
+                    "D": "BILLIOT"}
          }
 
 lien_cal_S4B1 = "https://ade-uga.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=41515&projectId=1&calType=ical&firstDate=2022-02-14&lastDate=2022-04-15"
@@ -32,9 +29,10 @@ def delete_other_options(calendar: MyCalendar, options_dict: dict) -> None:
     global profs
     for event in calendar.events:
         for i in profs.keys():  # Pour toutes les options
-            if event.description.find(i) != -1:  # Check si la matière est une matière à options
+            if event.summary.find(i) != -1:  # Check si la matière est une matière à options
                 for matiere, option in options_dict.items():  # Pour toutes les options
                     if event.description.find(profs[matiere][option]) == -1:  # Si l'option n'est pas celle demandée
+                        print("Suppression de l'évènement : " + event.summary)
                         calendar.events.remove(event)  # On vire l'event
                         break  # et on casse la boucle
 
@@ -48,4 +46,4 @@ if __name__ == '__main__':
     # remove_options(cal, matiere_options)
     # cal.write("ADECal2.ics")
     delete_other_options(cal, options_perso)
-    cal.write("ADECal2.ics")
+    cal.write("ADECal3.ics")

@@ -126,15 +126,21 @@ class Event:
         return self.__sequence
 
     def __str__(self):
-        return f"BEGIN:VEVENT\nDTSTART:{self.dstart.strftime('%Y%m%dT%H%M%S')}\nDTEND:{self.dend.strftime('%Y%m%dT%H%M%S')}\nLOCATION:{self.location}\nSUMMARY:{self.summary}\nDESCRIPTION:{self.description}\nDTSTAMP:{self.dtstamp.strftime('%Y%m%dT%H%M%SZ')}\nUID:{self.uid}\nCREATED:{self.created}\nLAST-MODIFIED:{self.last_modified}\nSEQUENCE:{self.sequence}\nEND:VEVENT"
+        return f"BEGIN:VEVENT\nDTSTAMP:{self.dtstamp.strftime('%Y%m%dT%H%M%SZ')}\n"+\
+        f"DTSTART:{self.dstart.strftime('%Y%m%dT%H%M%SZ')}\nDTEND:{self.dend.strftime('%Y%m%dT%H%M%SZ')}\n"+\
+        f"SUMMARY:{self.summary}\nLOCATION:{self.location}\nDESCRIPTION:{self.description}\nUID:{self.uid}\n"+\
+        f"CREATED:{self.created}\nLAST-MODIFIED:{self.last_modified}\nSEQUENCE:{self.sequence}\nEND:VEVENT"
+
+    def debug(self):
+        print(self.summary)
 
 
 def import_event(event_str: str) -> Event:
     data = dict()
-    infos = ["DTSTAMP", "DTSTART", "DTEND", "SUMMARY", "LOCATION", "UID", "CREATED", "LAST-MODIFIED", "SEQUENCE"]
-    for info in infos:
-        data[info] = event_str.split(info + ":")[1].split("\n")[0]
-    data["DESCRIPTION"] = event_str[event_str.find("DESCRIPTION:") + len("DESCRIPTION:"):event_str.find("UID:")]
+    infos = ["DTSTAMP", "DTSTART", "DTEND", "SUMMARY", "LOCATION", "DESCRIPTION", "UID", "CREATED", "LAST-MODIFIED", "SEQUENCE", "END"]
+    for i in range(len(infos)-1):
+        data[infos[i]] = event_str.split(infos[i] + ":")[1].split(f"\n{infos[i + 1]}")[0]
+    # data["DESCRIPTION"] = event_str[event_str.find("DESCRIPTION:") + len("DESCRIPTION:"):event_str.find("\nUID:")]
 
     event = Event(dstart=data["DTSTART"], dend=data["DTEND"], location=data["LOCATION"], summary=data["SUMMARY"],
                   description=data["DESCRIPTION"], dtstamp=data["DTSTAMP"], uid=data["UID"], created=data["CREATED"],
