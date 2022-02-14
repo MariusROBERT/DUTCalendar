@@ -2,7 +2,7 @@ from my_calendar import import_calendar, MyCalendar
 
 profs = {"M4101C": {"B": "MONTANVERT"},
          "M4105C": {"B": "ORTEGA",
-                    "C":"DAILLY",
+                    "C": "DAILLY",
                     "D": "LAURILLAU"},
          "M4201C": {"C": "CHABOUD",
                     "B": "BLANCO-LAINE"},
@@ -10,6 +10,7 @@ profs = {"M4101C": {"B": "MONTANVERT"},
                     "D": "BILLIOT",
                     "C": "CORSET"}
          }
+
 lien_cal_S4B1 = "https://ade-uga.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=41515&projectId=1&calType=ical&firstDate=2022-02-14&lastDate=2022-04-15"
 lien_cal_S4B2 = "https://ade-uga.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=41526&projectId=1&calType=ical&firstDate=2022-02-14&lastDate=2022-04-15"
 lien_cal_S4C1 = "https://ade-uga.grenet.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=41815&projectId=1&calType=ical&firstDate=2022-02-14&lastDate=2022-04-15"
