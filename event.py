@@ -136,14 +136,6 @@ def import_event(event_str: str) -> Event:
         data[info] = event_str.split(info + ":")[1].split("\n")[0]
     data["DESCRIPTION"] = event_str[event_str.find("DESCRIPTION:") + len("DESCRIPTION:"):event_str.find("UID:")]
 
-    # for line in event_str.replace("\n\n", "").split("\n"):
-    #     try:
-    #         key, value = line.split(":")
-    #         data[key] = value
-    #     except ValueError as e:
-    #         print(f"Error parsing line: {line}\n{e}")
-    # raise(e)
-    # [data.update({i.split(":")[0]: i.split(":")[1]}) for i in event_str.split("\n")]
     event = Event(dstart=data["DTSTART"], dend=data["DTEND"], location=data["LOCATION"], summary=data["SUMMARY"],
                   description=data["DESCRIPTION"], dtstamp=data["DTSTAMP"], uid=data["UID"], created=data["CREATED"],
                   last_modified=data["LAST-MODIFIED"], sequence=int(data["SEQUENCE"]))
@@ -155,7 +147,7 @@ if __name__ == "__main__":
         dstart="2021-01-01T00:00:00",
         dend=datetime.now() + timedelta(minutes=50),
         location="Somewhere",
-        summary="Test",
-        description="Test"
+        summary="Résumé",
+        description="Desc"
     )
     print(e)
