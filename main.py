@@ -3,11 +3,11 @@ import json
 from my_calendar import import_calendar, MyCalendar
 
 profs = {"M4101C": {"B": "MONTANVERT",
-                    "C": "",
-                    "D": ""},
+                    "C": "RANDOM",
+                    "D": "RANDOM"},
          "M4201C": {"B": "BLANCO-LAINE",
                     "C": "CHABOUD",
-                    "D": ""},
+                    "D": "RANDOM"},
          "M4202C": {"B": "HAMON",
                     "C": "CORSET",
                     "D": "BILLIOT"}
