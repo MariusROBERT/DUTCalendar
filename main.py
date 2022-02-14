@@ -30,11 +30,13 @@ def delete_other_options(calendar: MyCalendar, options_dict: dict) -> None:
     for event in calendar.events:
         for i in profs.keys():  # Pour toutes les options
             if event.summary.find(i) != -1:  # Check si la matière est une matière à options
-                for matiere, option in options_dict.items():  # Pour toutes les options
-                    if event.description.find(profs[matiere][option]) == -1:  # Si l'option n'est pas celle demandée
-                        print("Suppression de l'évènement : " + event.summary)
-                        calendar.events.remove(event)  # On vire l'event
-                        break  # et on casse la boucle
+                print("matière à options")
+                if event.description.find(profs[i][options_dict[i]]) == -1:  # Si l'option n'est pas celle demandée
+                    print("Suppression de l'évènement : " + event.description)
+                    calendar.events.remove(event)  # On vire l'event
+                    # break  # et on casse la boucle
+                else:
+                    a = 1
 
 
 if __name__ == '__main__':
