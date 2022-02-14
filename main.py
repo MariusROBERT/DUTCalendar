@@ -42,10 +42,10 @@ def delete_other_options(calendar: MyCalendar, options_dict: dict) -> None:
 if __name__ == '__main__':
     matiere_options = ["M4101C", "M4105C", "M4201C", "M4202C"]
     with open("config.json", "r") as f:
-        options_perso = json.load(f)
+        config = json.load(f)
 
-    cal = import_calendar("ADECal.ics")
+    cal = import_calendar(config["FichierIn"])
     # remove_options(cal, matiere_options)
     # cal.write("ADECal2.ics")
-    delete_other_options(cal, options_perso)
-    cal.write("ADECal3.ics")
+    delete_other_options(cal, config)
+    cal.write(config["FichierOut"])

@@ -1,5 +1,8 @@
 {
   "M4101C": "D",
   "M4201C": "B",
-  "M4202C": "D"
+  "M4202C": "D",
+  "Classe": "A2",
+  "FichierIn": "ADECal.ics",
+  "FichierOut": "ADECal2.ics"
 }
